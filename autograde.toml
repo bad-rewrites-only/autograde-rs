@@ -1,0 +1,21 @@
+[[tests]]
+name = "whatever"
+input = ["echo", 
+"""
+cock
+ball
+"""
+]
+expected = """
+cock
+ball
+"""
+rubric = 1
+
+
+[[tests]]
+name = "lol"
+input = ["nu", "-c", "exit 1"]
+expected = ""
+rubric = 1
+
