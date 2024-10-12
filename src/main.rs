@@ -10,9 +10,9 @@ use clap::{Parser, Subcommand};
 use log::{debug, info};
 use miette::WrapErr;
 
-use autograde::build::make;
-use autograde::config::Config;
-use autograde::unit::TestUnits;
+use autograde_rs::build::make;
+use autograde_rs::config::Config;
+use autograde_rs::unit::TestUnits;
 
 #[derive(Parser, Debug)]
 struct Args {
