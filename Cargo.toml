@@ -1,0 +1,17 @@
+[package]
+name = "autograde"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.89"
+clap = { version = "4.5.17", features = ["derive"] }
+dirs = "5.0.1"
+env_logger = "0.11.5"
+log = "0.4.22"
+miette = { version = "7.2.0", features = ["fancy"] }
+serde = { version = "1.0.210", features = ["derive"] }
+similar = "2.6.0"
+thiserror = "1.0.64"
+tokio = { version = "1.40.0", features = ["full"] }
+toml = "0.8.19"

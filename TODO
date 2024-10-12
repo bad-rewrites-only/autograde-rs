@@ -1,0 +1,11 @@
+TODO
+
+fuzzing
+output to PAGER (check color support, use bat automatically?)
+auto-pull tests repo
+put tests in .tests
+configure / run gdb (such that it doesn't pollute def gdb settings)
+json flag
+nushell support
+
+ui for creating tests?
