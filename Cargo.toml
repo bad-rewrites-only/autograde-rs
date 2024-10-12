@@ -2,6 +2,11 @@
 name = "autograde"
 version = "0.1.0"
 edition = "2021"
+license = "GPL-3.0-only"
+description = "Run test cases vs. expected output"
+homepage = "https://github.com/bad-rewrites-only/autograde-rs"
+repository = "https://github.com/bad-rewrites-only/autograde-rs"
+readme = "README.md"
 
 [dependencies]
 anyhow = "1.0.89"
