@@ -58,7 +58,9 @@ impl TestUnit {
 #[derive(Debug)]
 struct UnitOutput {
     // output: String,
+    name: String,
     grade: u64,
+    rubric: u64,
 }
 
 #[derive(Error, Diagnostic, Debug)]
@@ -137,14 +139,15 @@ impl TestUnits {
 
         let grade: u64 = outputs
             .into_iter()
-            .map(|out| {
-                match out {
-                    Ok(out) => out.grade, // Err(e) => bail!(e)
-                    Err(e) => {
-                        let report = Report::new(e);
-                        eprintln!("{:?}", report);
-                        0
-                    }
+            .map(|out| match out {
+                Ok(out) => {
+                    println!("{}: ({}/{})", out.name, out.grade, out.rubric);
+                    out.grade
+                }
+                Err(e) => {
+                    let report = Report::new(e);
+                    eprintln!("{:?}", report);
+                    0
                 }
             })
             .sum();
@@ -197,7 +200,12 @@ impl TestUnit {
         }
 
         if errors.is_empty() {
-            Ok(UnitOutput { grade: self.rubric })
+            // TODO change to actual partial grading?
+            Ok(UnitOutput {
+                name: self.name,
+                grade: self.rubric,
+                rubric: self.rubric,
+            })
         } else {
             Err(
                 UnitError::IncorrectOutput, //     (IncorrectOutput {

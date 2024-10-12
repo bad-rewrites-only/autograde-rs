@@ -1,0 +1,24 @@
+[[tests]]
+name = "foobar"
+input = ["echo", """
+foo
+bar
+"""]
+expected = """
+foo
+bar
+"""
+rubric = 1
+
+
+[[tests]]
+name = "exit"
+input = ["nu", "-c", "exit 1"]
+expected = ""
+rubric = 1
+
+[[tests]]
+name = "fails"
+input = ["echo", "howdy word"]
+expected = "hello world"
+rubric = 0

@@ -20,14 +20,17 @@ struct Args {
     command: Command,
     #[arg(short, long)]
     project_path: Option<String>,
-    #[arg(short, long)]
-    tests_path: Option<String>,
+    // #[arg(short, long)]
+    // tests_path: Option<String>,
 }
 
 #[derive(Subcommand, Debug)]
 enum Command {
     /// Run the test case(s) for the current project
-    Test { unit_path: Option<String> },
+    Test {
+        #[arg(short, long)]
+        tests_path: Option<String>,
+    },
     // Configure,
 }
 
@@ -38,7 +41,7 @@ async fn main() -> miette::Result<()> {
     env_logger::init();
 
     match Args::parse().command {
-        Command::Test { unit_path } => {
+        Command::Test { tests_path } => {
             let config = Config::read_or_create().unwrap();
             let config_test = config
                 .test
@@ -46,7 +49,7 @@ async fn main() -> miette::Result<()> {
                 .context("Config file missing test section!")
                 .unwrap();
 
-            let tests_path = if let Some(u) = unit_path {
+            let tests_path = if let Some(u) = tests_path {
                 u
             } else {
                 config_test
@@ -89,15 +92,19 @@ async fn main() -> miette::Result<()> {
 
             tests.tests.iter_mut().for_each(|test| {
                 match test.interpolate_config(&config, project_exec) {
-                    Ok(_) => {}
+                    Ok(_) => {
+                        info!("Interpolation succeeded!");
+                    }
                     Err(e) => {
-                        eprintln!("Interpolation failed: {}", e);
-                        panic!()
+                        panic!("Interpolation failed: {}", e);
                     }
                 }
             });
-            info!("Interpolation succeeded!");
-            debug!("test unit struct: \n{:#?}", tests);
+            debug!(
+                "parsed and interpolated test units:
+                {:#?}",
+                tests
+            );
 
             // TODO auto pull
             let grade = tests.run().await?;
